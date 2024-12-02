@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fullscreen GIF Slideshow with Navigation</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #000;
+        }
+        .slideshow-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+        .slideshow-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        .slideshow-image.active {
+            opacity: 1;
+        }
+        /* Button Styles */
+        .nav-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(145deg, #33333300, #111);
+            color: #fff;
+            border: 2px solid #555;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.544);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .nav-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 12px rgba(92, 63, 63, 0.688);
+        }
+        .nav-button:active {
+            transform: scale(0.95);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
+        .prev-button {
+            left: 20px;
+        }
+        .next-button {
+            right: 20px;
+        }
+        /* End Button */
+        .end-button {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(145deg, #5f5f5fac, #414f61ea);
+            color: #b3b3b38d;
+            border: 2px solid #22009f00;
+            border-radius: 10px;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            display: none;
+            box-shadow: 0 4px 8px rgba(106, 60, 60, 0.124);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .end-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 12px rgba(255, 255, 255, 0.6);
+        }
+    </style>
+</head>
+<body>
+    <div class="slideshow-container">
+        
+        <img class="slideshow-image active" src="ScreenRecording_12-01-2024 23-13-53_1.mov" alt="GIF 1">
+        <img class="slideshow-image" src="ScreenRecording_12-02-2024 00-06-15_1.mov" alt="GIF 5">
+        <img class="slideshow-image" src="ScreenRecording_12-01-2024 23-19-56_1.mov" alt="GIF 5">
+        <img class="slideshow-image" src="ScreenRecording_12-02-2024 00-08-07_1.mov" alt="GIF 9" id="last-gif">
+
+        <!-- Navigation Buttons -->
+        <div class="nav-button prev-button">&#9664;</div>
+        <div class="nav-button next-button">&#9654;</div>
+
+        <!-- End Button -->
+        <a href="index.html" class="end-button" id="end-button">Memories Come Flooding Back...</a>
+    </div>
+
+    <script>
+        const images = document.querySelectorAll('.slideshow-image');
+        const nextButton = document.querySelector('.next-button');
+        const prevButton = document.querySelector('.prev-button');
+        const endButton = document.getElementById('end-button');
+        const lastGif = document.getElementById('last-gif');
+        let currentIndex = 0;
+
+        function showNextImage() {
+            images[currentIndex].classList.remove('active');
+
+            currentIndex = (currentIndex + 1) % images.length;
+
+            images[currentIndex].classList.add('active');
+
+            // Show the "Memories Come Flooding Back..." button only on the last image
+            endButton.style.display = currentIndex === images.length - 1 ? 'block' : 'none';
+        }
+
+        function showPrevImage() {
+            images[currentIndex].classList.remove('active');
+
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+
+            images[currentIndex].classList.add('active');
+
+            // Hide the "Next" button when not on the last image
+            endButton.style.display = currentIndex === images.length - 1 ? 'block' : 'none';
+        }
+
+        nextButton.addEventListener('click', showNextImage);
+        prevButton.addEventListener('click', showPrevImage);
+    </script>
+</body>
+</html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metallic Ball Cursor</title>
+    <style>
+        /* Remove the default cursor */
+        body {
+            cursor: none;
+            margin: 0;
+            height: 100vh;
+            background: linear-gradient(145deg, 
+                        #000000, 
+                        #1a1a1a 30%, 
+                        #333333 50%, 
+                        #1a1a1a 70%, 
+                        #000000);
+            overflow: hidden;
+        }
+
+        /* Metallic ball styling */
+        .metallic-cursor {
+            width: 30px;
+            height: 30px;
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, 
+                        #ffffff,   /* Light reflection */
+                        #cccccc,   /* Metallic shine */
+                        #666666);  /* Darker shade */
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5), 
+                        0 0 30px rgba(200, 200, 200, 0.2);
+            pointer-events: none; /* Ensures it doesn't block interaction */
+            transform: translate(-50%, -50%);
+            transition: background 0.2s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="metallic-cursor" id="metallicCursor"></div>
+
+    <script>
+        const metallicCursor = document.getElementById('metallicCursor');
+
+        // Update the cursor position on mouse move
+        document.addEventListener('mousemove', (e) => {
+            metallicCursor.style.left = `${e.clientX}px`;
+            metallicCursor.style.top = `${e.clientY}px`;
+        });
+
+        // Optional: Add interaction effects when clicking
+        document.addEventListener('mousedown', () => {
+            metallicCursor.style.background = 'radial-gradient(circle, #ffffff, #999999, #444444)';
+        });
+
+        document.addEventListener('mouseup', () => {
+            metallicCursor.style.background = 'radial-gradient(circle, #ffffff, #cccccc, #666666)';
+        });
+    </script>
+</body>
